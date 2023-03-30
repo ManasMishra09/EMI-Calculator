@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>EMI Calculator</title>
+    <style>
+      /* Add some styles to make the page look good */
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+      }
+      button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>EMI Calculator</h1>
+    <form>
+      <label for="loan-amount">Loan Amount:</label>
+      <input type="number" id="loan-amount" name="loan-amount" placeholder="Enter loan amount" required>
+      
+      <label for="annual-interest-rate">Annual Interest Rate:</label>
+      <input type="number" id="annual-interest-rate" name="annual-interest-rate" placeholder="Enter annual interest rate" required>
+      
+      <label for="tenure">Tenure (in months):</label>
+      <input type="number" id="tenure" name="tenure" placeholder="Enter tenure (in months)" required>
+      
+      <button type="button" onclick="calculateEMI()">Calculate EMI</button>
+    </form>
+    
+    <table id="result-table" style="display: none;">
+      <tr>
+        <th>EMI per month</th>
+        <th>Total interest to be paid</th>
+        <th>Total payment (principal + interest)</th>
+      </tr>
+      <tr>
+        <td id="emi-per-month"></td>
+        <td id="total-interest"></td>
+        <td id="total-payment"></td>
+      </tr>
+    </table>
+    
+    <script>
+      function calculateEMI() {
+        // Get the input values
+        var loanAmount = parseFloat(document.getElementById("loan-amount").value);
+        var annualInterestRate = parseFloat(document.getElementById("annual-interest-rate").value);
+        var tenure = parseInt(document.getElementById("tenure").value);
+        // Calculate the monthly interest rate and tenure in months
+var monthlyInterestRate = annualInterestRate / 1200; // 12 months in a year and 100 to convert % to decimal
+var tenureInMonths = tenure;
+    // Calculate the EMI per month
+    var emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, tenureInMonths)) / (Math.pow(1 + monthlyInterestRate, tenureInMonths) - 1);
+    
+    // Calculate the total interest and total payment
+    var totalInterest = emi * tenureInMonths - loanAmount;
+    var totalPayment = emi * tenureInMonths;
+    
+    // Display the results
+    document.getElementById("emi-per-month").innerHTML = emi.toFixed(2);
+    document.getElementById("total-interest").innerHTML = totalInterest.toFixed(2);
+    document.getElementById("total-payment").innerHTML = totalPayment.toFixed(2);
+    
+    // Show the result table
+    document.getElementById("result-table").style.display = "table";
+  }
+</script>
+</body>
+</html>
+        
+       
